@@ -1,34 +1,38 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
+import Header from "./components/Header";
+import { UserContextConsumer } from "./components/hooks/UserContext";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+	const [newUsername, setNewUsername] = useState("");
 
-  return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
-}
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { name, value } = e.target;
+		setNewUsername(value);
+	};
 
-export default App
+	return (
+		<div>
+			<Header />
+			<UserContextConsumer>
+				{({ username, changeUsername }) => (
+					<main>
+						<p className="main">No new notifications, {username}! 🎉</p>
+						<input
+							type="text"
+							name="newUsername"
+							placeholder="New username"
+							value={newUsername}
+							onChange={handleChange}
+						/>
+						<button onClick={() => changeUsername(newUsername)}>
+							Change Username
+						</button>
+					</main>
+				)}
+			</UserContextConsumer>
+		</div>
+	);
+};
+
+export default App;
