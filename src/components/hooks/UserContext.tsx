@@ -6,24 +6,23 @@ interface Props {
 
 interface Context {
 	username: string;
-	changeUsername?: any; // Fix any type
+	changeUsername: (name: string) => void; // Fix any type
 }
 
 const { Provider, Consumer } = createContext<Context>({
 	username: "",
+	changeUsername: () => {},
 });
 
 const UserContextProvider: React.FC<Props> = (props) => {
 	const [username, setUsername] = useState("");
 
-	const changeUsername = (username: string) => {
-		setUsername(username);
+	const changeUsername = (name: string) => {
+		setUsername(name);
 	};
 
 	return (
-		<Provider value={{ username, changeUsername: changeUsername }}>
-			{props.children}
-		</Provider>
+		<Provider value={{ username, changeUsername }}>{props.children}</Provider>
 	);
 };
 
