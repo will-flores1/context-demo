@@ -6,7 +6,7 @@ interface Props {
 
 interface Context {
 	username: string;
-	changeUsername?: any;
+	changeUsername?: any; // Fix any type
 }
 
 const { Provider, Consumer } = createContext<Context>({
